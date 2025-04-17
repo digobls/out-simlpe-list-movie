@@ -1,0 +1,42 @@
+# Angular build artifacts
+/dist
+/tmp
+/out-tsc
+/angular/cache
+/.angular
+/coverage
+
+# Compiled output
+/build
+/**/*.js
+/**/*.js.map
+
+# Environment files
+/src/environments/environment*.ts
+
+# Node
+/node_modules
+/npm-debug.log
+/package-lock.json
+/yarn.lock
+/pnpm-lock.yaml
+
+# IDEs
+
+## VS Code
+.vscode/
+.history/
+
+## WebStorm / IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# OS generated
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
