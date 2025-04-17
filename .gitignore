@@ -11,9 +11,6 @@
 /**/*.js
 /**/*.js.map
 
-# Environment files
-/src/environments/environment*.ts
-
 # Node
 /node_modules
 /npm-debug.log

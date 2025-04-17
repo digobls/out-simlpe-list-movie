@@ -1,2 +1,9 @@
-<p>Home page</p>
-<!--<router-outlet></router-outlet>-->
+<div class="d-flex flex-column">
+    <app-top-menu></app-top-menu>
+    <div class="d-flex flex-grow-1">
+        <app-sidebar></app-sidebar>
+        <div class="flex-grow-1 p-4">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
