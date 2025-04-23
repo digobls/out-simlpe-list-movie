@@ -12,12 +12,14 @@
   }
 
   .input-group {
-    margin-bottom: 20px;
-
     .btn-search {
       background: var(--bs-primary);
       color: #fff;
     }
+  }
+
+  .offset-top-20 {
+    margin-top: 20px;
   }
 
   .table {

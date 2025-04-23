@@ -4,7 +4,7 @@
       <div class="container-table mb-4">
         <h2>List years with multiple winners</h2>
 
-        <ng-container *ngIf="listMultipleWinners?.length">
+        <ng-container *ngIf="listMultipleWinners?.length && !loadingWinners">
           <div class="table-responsive">
             <table class="table table-bordered table-hover">
               <thead>
@@ -22,6 +22,13 @@
             </table>
           </div>
         </ng-container>
+
+        <ng-container *ngIf="loadingWinners">
+          <app-skeleton-loading
+            [type]="'table'"
+            [totalRepeat]="5">
+          </app-skeleton-loading>
+        </ng-container>
       </div>
     </div>
 
@@ -29,7 +36,7 @@
       <div class="container-table mb-4">
         <h2>Top 3 studios with winners</h2>
 
-        <ng-container *ngIf="listStudiosMovies?.length">
+        <ng-container *ngIf="listStudiosMovies?.length && !loadingStudios">
           <div class="table-responsive">
             <table class="table table-bordered table-hover">
               <thead>
@@ -47,6 +54,13 @@
             </table>
           </div>
         </ng-container>
+
+        <ng-container *ngIf="loadingStudios">
+          <app-skeleton-loading
+            [type]="'table'"
+            [totalRepeat]="5">
+          </app-skeleton-loading>
+        </ng-container>
       </div>
     </div>
   </div>
@@ -60,7 +74,7 @@
           <div class="mb-4">
             <h4>Maximum</h4>
 
-            <ng-container *ngIf="listMaxMovies.length">
+            <ng-container *ngIf="listMaxMovies.length && !loadingMinMax">
               <div class="table-responsive">
                 <table class="table table-bordered table-hover">
                   <thead>
@@ -82,12 +96,19 @@
                 </table>
               </div>
             </ng-container>
+
+            <ng-container *ngIf="loadingMinMax">
+              <app-skeleton-loading
+                [type]="'table'"
+                [totalRepeat]="5">
+              </app-skeleton-loading>
+            </ng-container>
           </div>
 
           <div>
             <h4>Minimum</h4>
 
-            <ng-container *ngIf="listMinMovies.length">
+            <ng-container *ngIf="listMinMovies.length && !loadingMinMax">
               <div class="table-responsive">
                 <table class="table table-bordered table-hover">
                   <thead>
@@ -109,6 +130,14 @@
                 </table>
               </div>
             </ng-container>
+
+
+            <ng-container *ngIf="loadingMinMax">
+              <app-skeleton-loading
+                [type]="'table'"
+                [totalRepeat]="5">
+              </app-skeleton-loading>
+            </ng-container>
           </div>
         </div>
       </div>
@@ -123,42 +152,57 @@
             type="number"
             class="form-control"
             [formControl]="yearControl"
-            (keyup.enter)="filterMoviesByYear()"
             placeholder="Search by year (ex: 1999)">
           <button
             class="btn btn-search"
             type="button"
-            (click)="filterMoviesByYear()">
+            [disabled]="yearControl.invalid"
+            (click)="loadFilmsByYear(yearControl.value!)">
             <i class="bi bi-search"></i>
           </button>
         </div>
 
         <div class="container-error">
-          <div *ngIf="yearControl.invalid && (yearControl.dirty || yearControl.touched)" class="text-danger mt-1 small">
+          <div *ngIf="yearControl.invalid && (yearControl.dirty || yearControl.touched)" class="text-danger small">
             <div *ngIf="yearControl.errors?.['pattern']">
               Year must have exactly 4 digits
             </div>
           </div>
         </div>
 
-        <div class="table-responsive offset-top-20">
-          <table class="table table-bordered table-hover">
-            <thead>
-            <tr>
-              <th>Id</th>
-              <th>Year</th>
-              <th>Title</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let movie of filteredMovies">
-              <td>{{ movie.id }}</td>
-              <td>{{ movie.year }}</td>
-              <td>{{ movie.title }}</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
+        <ng-container *ngIf="listYearMovies?.length && !loadingYear">
+          <div class="table-responsive offset-top-20">
+            <table class="table table-bordered table-hover">
+              <thead>
+              <tr>
+                <th>Id</th>
+                <th>Year</th>
+                <th>Title</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let movie of listYearMovies">
+                <td>{{ movie.id }}</td>
+                <td>{{ movie.year }}</td>
+                <td>{{ movie.title }}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="!listYearMovies?.length && !loadingYear">
+          <div class="alert alert-info">
+            No movies found matching the selected filters.
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="loadingYear">
+          <app-skeleton-loading
+            [type]="'table'"
+            [totalRepeat]="5">
+          </app-skeleton-loading>
+        </ng-container>
       </div>
     </div>
   </div>

@@ -1,0 +1,125 @@
+$title-color: #212529;
+$text-color: #58535e;
+$color-checked: #2f23d6;
+$border-color: #ced4da;
+
+.container-pagination-total-per-page {
+  position: relative;
+
+  .container-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0 20px;
+
+    .pagination-button {
+      border: 1px solid #dee2e6;
+      height: 30px;
+      text-align: center;
+      background: #fff;
+      border-radius: 6px;
+      margin: 0 2px;
+      min-width: 34px;
+      color: $title-color;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: 0 1px 1px rgba(47, 43, 61, 0.1), 0 0 transparent, 0 0 transparent;
+
+      &:focus {
+        box-shadow: none;
+      }
+
+      &:hover {
+        background-color: #f0f0f0;
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+
+    .pagination-button.active {
+      background-color: $color-checked;
+      color: #fff;
+    }
+  }
+
+  .items-per-page-container {
+    position: absolute;
+    right: 0;
+    top: 1.5px;
+
+    .total-page-info {
+      display: inline-block;
+      color: $text-color;
+      height: 20px;
+      line-height: 20px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .container-total {
+      position: relative;
+      display: inline-block;
+
+      span {
+        color: $text-color;
+        margin: 0;
+        height: 20px;
+        line-height: 20px;
+        font-size: 12px;
+        font-weight: 500;
+        padding: 0 6px 4px;
+        border-bottom: 1px solid $border-color;
+      }
+
+      .container-values {
+        display: none;
+        right: -8px;
+        transform: translateY(29px);
+        text-align: center;
+        background: #fff;
+        min-width: 40px;
+        width: max-content;
+        box-shadow: 2px 2px 2px 4px rgba(0, 0, 0, .06);
+        border-radius: 6px;
+        position: absolute;
+        top: -4px;
+        z-index: 1;
+
+        .list-total {
+          cursor: pointer;
+
+          span {
+            padding: 0;
+            border-bottom: none;
+          }
+
+          &:first-of-type {
+            margin-top: 0;
+            border-top-right-radius: 6px;
+            border-top-left-radius: 6px;
+          }
+
+          &:last-of-type {
+            margin-bottom: 0;
+            border-bottom-right-radius: 6px;
+            border-bottom-left-radius: 6px;
+          }
+
+          &:hover {
+            background: rgba(204, 204, 204, 0.58);
+          }
+        }
+      }
+
+      &:hover {
+        .container-values {
+          display: block;
+        }
+      }
+    }
+  }
+}

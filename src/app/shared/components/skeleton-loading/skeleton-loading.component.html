@@ -1,0 +1,7 @@
+<ng-container *ngIf="type != 'table'">
+  <div class="loading-on-element-custom" [ngStyle]="createStyles()"></div>
+</ng-container>
+
+<ng-container *ngIf="type === 'table'">
+  <div *ngFor="let item of repeatArray; let i = index" class="loading-on-element-custom loading-table"></div>
+</ng-container>

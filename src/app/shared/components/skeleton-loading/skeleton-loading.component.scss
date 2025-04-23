@@ -1,0 +1,53 @@
+$loadingColor: #E6E9EC;
+$loadingChangeColor: #FFF;
+
+.loading-on-element-custom {
+  -webkit-animation-duration: 2.25s;
+  animation-duration: 2.25s;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  -webkit-animation-name: placeHolderShimmer;
+  animation-name: placeHolderShimmer;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  background: $loadingColor;
+  background: -webkit-gradient(linear, left top, right top, color-stop(8%, $loadingColor), color-stop(18%, $loadingChangeColor), color-stop(33%, $loadingColor));
+  background: linear-gradient(to right, $loadingColor 8%, $loadingChangeColor 18%, $loadingColor 33%);
+  background-size: 800px 104px;
+  height: 14px;
+  border-radius: 2px;
+  width: 100%;
+  margin-top: 20px;
+  max-width: 100%;
+}
+
+.loading-table {
+  height: 40px;
+  margin: 20px 0 0 0;
+
+  &:first-of-type {
+    margin: 10px 0 0;
+  }
+}
+
+@-webkit-keyframes placeHolderShimmer {
+  0% {
+    background-position: -468px 0;
+  }
+
+  100% {
+    background-position: 468px 0;
+  }
+}
+
+@keyframes placeHolderShimmer {
+  0% {
+    background-position: -468px 0;
+  }
+
+  100% {
+    background-position: 468px 0;
+  }
+}

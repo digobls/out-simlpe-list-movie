@@ -61,7 +61,6 @@ describe('DashboardComponent', () => {
       expect(movieServiceSpy.getMovies).toHaveBeenCalledWith('projection=years-with-multiple-winners');
 
       expect(component.listYearMovies).toEqual(mockMovies);
-      expect(component.filteredMovies).toEqual(mockMovies);
       expect(component.listMinMovies).toEqual(mockAwards.min);
       expect(component.listMaxMovies).toEqual(mockAwards.max);
       expect(component.listStudiosMovies).toEqual(mockStudios.studios.slice(0, 3));
@@ -79,19 +78,6 @@ describe('DashboardComponent', () => {
 
     expect(movieServiceSpy.getMovies).toHaveBeenCalledWith('winner=true&year=2018');
     expect(component.listYearMovies).toEqual(mockMovies);
-    expect(component.filteredMovies).toEqual(mockMovies);
-  });
-
-  it('should filter movies by year', () => {
-    component.listYearMovies = [
-      { year: '2018', title: 'Movie 1' },
-      { year: '2019', title: 'Movie 2' }
-    ];
-    component.yearControl.setValue('2018');
-
-    component.filterMoviesByYear();
-
-    expect(component.filteredMovies).toEqual([{ year: '2018', title: 'Movie 1' }]);
   });
 
   it('should load films by year on init', () => {
@@ -102,7 +88,6 @@ describe('DashboardComponent', () => {
 
     expect(movieServiceSpy.getMovies).toHaveBeenCalledWith('winner=true&year=2018');
     expect(component.listYearMovies).toEqual(mockMovies);
-    expect(component.filteredMovies).toEqual(mockMovies);
   });
 
   it('should filter movies by year', () => {
@@ -112,17 +97,7 @@ describe('DashboardComponent', () => {
     ];
     component.yearControl.setValue('2018');
 
-    component.filterMoviesByYear();
-
-    expect(component.filteredMovies).toEqual([{ year: '2018', title: 'Movie 1' }]);
-  });
-
-  it('should filter movies by year and return empty', () => {
-    component.listYearMovies = [];
-
-    component.filterMoviesByYear();
-
-    expect(component.filteredMovies).toEqual([]);
+    expect(component.loadFilmsByYear).toEqual([{ year: '2018', title: 'Movie 1' }]);
   });
 
   it('should load awards range', () => {

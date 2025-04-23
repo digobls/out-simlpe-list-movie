@@ -2,17 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { NgForOf, NgIf } from '@angular/common';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MovieService } from '../../services/movie.service';
+import { SkeletonLoadingComponent } from '../../shared/components/skeleton-loading/skeleton-loading.component';
 
 @Component({
-    selector: 'app-dashboard',
-    templateUrl: './dashboard.component.html',
-    styleUrl: './dashboard.component.scss',
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrl: './dashboard.component.scss',
     imports: [
         NgForOf,
         FormsModule,
         ReactiveFormsModule,
-        NgIf
-    ]
+        NgIf,
+        SkeletonLoadingComponent
+    ],
+  standalone: true
 })
 export class DashboardComponent implements OnInit {
   // Search year
@@ -22,17 +25,20 @@ export class DashboardComponent implements OnInit {
 
   // List multiple winners
   listMultipleWinners: any = [];
+  loadingWinners: boolean = false;
 
   // Top 3 studios
   listStudiosMovies: any = [];
+  loadingStudios: boolean = false;
 
   // Winning films by year
   listMinMovies: any = [];
   listMaxMovies: any = [];
+  loadingMinMax: boolean = false;
 
   // Years
   listYearMovies: any = [];
-  filteredMovies: any = [];
+  loadingYear: boolean = false;
 
   constructor(private movieService: MovieService) {}
 
@@ -44,28 +50,19 @@ export class DashboardComponent implements OnInit {
   }
 
   // Load films by year
-  loadFilmsByYear() {
-    this.movieService.getMovies('winner=true&year=2018').subscribe(response => {
+  loadFilmsByYear(year = '2018') {
+    this.loadingYear = true;
+    this.movieService.getMovies(`winner=true&year=${year}`).subscribe(response => {
+      this.loadingYear = false;
       this.listYearMovies = response;
-      this.filteredMovies = response;
     });
-  }
-
-  // Search movies by year
-  filterMoviesByYear() {
-    if (this.yearControl.valid && this.yearControl.value) {
-      const year: string = this.yearControl.value;
-      this.filteredMovies = this.listYearMovies.filter((movie: any) =>
-        movie?.year === year
-      );
-    } else {
-      this.filteredMovies = this.listYearMovies;
-    }
   }
 
   // Load films awards range
   loadAwardsRange() {
+    this.loadingMinMax = true;
     this.movieService.getMovies('projection=max-min-win-interval-for-producers').subscribe(response => {
+      this.loadingMinMax = false;
       this.listMinMovies = response?.min;
       this.listMaxMovies = response?.max;
     });
@@ -73,7 +70,9 @@ export class DashboardComponent implements OnInit {
 
   // Load films and filter top 3 studios
   loadStudios() {
+    this.loadingStudios = true;
     this.movieService.getMovies('projection=studios-with-win-count').subscribe(response => {
+      this.loadingStudios = false;
       if (response?.studios?.length) {
         this.listStudiosMovies = response?.studios
           .sort((a: any, b: any) => b.winCount - a.winCount)
@@ -84,8 +83,9 @@ export class DashboardComponent implements OnInit {
 
   // Load films years with more than one winner
   loadYearsWinner() {
+    this.loadingWinners = true;
     this.movieService.getMovies('projection=years-with-multiple-winners').subscribe(response => {
-      console.log('response', response);
+      this.loadingWinners = false;
       this.listMultipleWinners = response?.years;
     });
   }

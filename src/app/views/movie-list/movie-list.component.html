@@ -1,7 +1,7 @@
 <div class="container-table mt-4">
   <h2>List movies</h2>
 
-  <ng-container *ngIf="movies.length">
+  <ng-container *ngIf="!loading">
     <div class="table-responsive">
       <table class="table table-bordered table-hover">
         <thead>
@@ -24,7 +24,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let movie of filteredMovies">
+        <tr *ngFor="let movie of movies">
           <td>{{ movie.id }}</td>
           <td>{{ movie.year }}</td>
           <td>
@@ -37,19 +37,23 @@
         </tbody>
       </table>
     </div>
+
+    <app-pagination
+      [configPagination]="{currentPage: page, totalRecordsPerPage: pageSize, totalRecords: collectionSize}"
+      (changePage)="onPageChange($event)">
+    </app-pagination>
   </ng-container>
 
-  <ng-container *ngIf="movies.length && filteredMovies.length === 0 && !loading">
-    <div class="mt-4" >
-      <div class="alert alert-info">
-        No movies found matching the selected filters.
-      </div>
-    </div>
+  <ng-container *ngIf="loading">
+    <app-skeleton-loading
+      [type]="'table'"
+      [totalRepeat]="4">
+    </app-skeleton-loading>
   </ng-container>
 
   <ng-container *ngIf="!movies.length && !loading">
     <div class="alert alert-info">
-      No movies registered at the moment.
+      No movies found matching the selected filters.
     </div>
   </ng-container>
 </div>
