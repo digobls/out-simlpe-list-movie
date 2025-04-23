@@ -15,7 +15,7 @@ describe('DashboardComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [
-        DashboardComponent, // Standalone component
+        DashboardComponent,
         ReactiveFormsModule,
         HttpClientTestingModule
       ],
@@ -31,6 +31,67 @@ describe('DashboardComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('ngOnInit', () => {
+    it('should call all initialization methods', () => {
+      const mockMovies = [{ year: '2018', title: 'Movie 1' }];
+      const mockAwards = { min: [{ name: 'A' }], max: [{ name: 'B' }] };
+      const mockStudios = { studios: [
+          { name: 'Studio 1', winCount: 10 },
+          { name: 'Studio 2', winCount: 7 },
+          { name: 'Studio 3', winCount: 5 }
+        ]};
+      const mockYears = { years: ['2000', '2010'] };
+
+      movieServiceSpy.getMovies.and.returnValues(
+        of(mockMovies),
+        of(mockAwards),
+        of(mockStudios),
+        of(mockYears)
+      );
+
+      // Act
+      component.ngOnInit();
+
+      // Assert
+      expect(movieServiceSpy.getMovies).toHaveBeenCalledWith('winner=true&year=2018');
+      expect(movieServiceSpy.getMovies).toHaveBeenCalledWith('projection=max-min-win-interval-for-producers');
+      expect(movieServiceSpy.getMovies).toHaveBeenCalledWith('projection=studios-with-win-count');
+      expect(movieServiceSpy.getMovies).toHaveBeenCalledWith('projection=years-with-multiple-winners');
+
+      expect(component.listYearMovies).toEqual(mockMovies);
+      expect(component.filteredMovies).toEqual(mockMovies);
+      expect(component.listMinMovies).toEqual(mockAwards.min);
+      expect(component.listMaxMovies).toEqual(mockAwards.max);
+      expect(component.listStudiosMovies).toEqual(mockStudios.studios.slice(0, 3));
+      expect(component.listMultipleWinners).toEqual(mockYears.years);
+
+      expect(movieServiceSpy.getMovies).toHaveBeenCalledTimes(4);
+    });
+  });
+
+  it('should load films by year', () => {
+    const mockMovies = [{ year: '2018', title: 'Movie 1' }];
+    movieServiceSpy.getMovies.and.returnValue(of(mockMovies));
+
+    component.loadFilmsByYear();
+
+    expect(movieServiceSpy.getMovies).toHaveBeenCalledWith('winner=true&year=2018');
+    expect(component.listYearMovies).toEqual(mockMovies);
+    expect(component.filteredMovies).toEqual(mockMovies);
+  });
+
+  it('should filter movies by year', () => {
+    component.listYearMovies = [
+      { year: '2018', title: 'Movie 1' },
+      { year: '2019', title: 'Movie 2' }
+    ];
+    component.yearControl.setValue('2018');
+
+    component.filterMoviesByYear();
+
+    expect(component.filteredMovies).toEqual([{ year: '2018', title: 'Movie 1' }]);
   });
 
   it('should load films by year on init', () => {
@@ -54,6 +115,14 @@ describe('DashboardComponent', () => {
     component.filterMoviesByYear();
 
     expect(component.filteredMovies).toEqual([{ year: '2018', title: 'Movie 1' }]);
+  });
+
+  it('should filter movies by year and return empty', () => {
+    component.listYearMovies = [];
+
+    component.filterMoviesByYear();
+
+    expect(component.filteredMovies).toEqual([]);
   });
 
   it('should load awards range', () => {

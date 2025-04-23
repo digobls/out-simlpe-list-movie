@@ -47,8 +47,8 @@ export class DashboardComponent implements OnInit {
   // Load films by year
   loadFilmsByYear() {
     this.movieService.getMovies('winner=true&year=2018').subscribe(response => {
-      this.listYearMovies = response || [];
-      this.filteredMovies = response || [];
+      this.listYearMovies = response;
+      this.filteredMovies = response;
     });
   }
 
@@ -67,8 +67,8 @@ export class DashboardComponent implements OnInit {
   // Load films awards range
   loadAwardsRange() {
     this.movieService.getMovies('projection=max-min-win-interval-for-producers').subscribe(response => {
-      this.listMinMovies = response?.min || [];
-      this.listMaxMovies = response?.max || [];
+      this.listMinMovies = response?.min;
+      this.listMaxMovies = response?.max;
     });
   }
 
@@ -87,7 +87,7 @@ export class DashboardComponent implements OnInit {
   loadYearsWinner() {
     this.movieService.getMovies('projection=years-with-multiple-winners').subscribe(response => {
       console.log('response', response);
-      this.listMultipleWinners = response?.years || [];
+      this.listMultipleWinners = response?.years;
     });
   }
 }
