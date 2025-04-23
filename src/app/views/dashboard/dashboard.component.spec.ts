@@ -2,8 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DashboardComponent } from './dashboard.component';
 import { MovieService } from '../../services/movie.service';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { of } from 'rxjs';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -14,15 +15,14 @@ describe('DashboardComponent', () => {
     const spy = jasmine.createSpyObj('MovieService', ['getMovies']);
 
     await TestBed.configureTestingModule({
-      imports: [
-        DashboardComponent,
-        ReactiveFormsModule,
-        HttpClientTestingModule
-      ],
-      providers: [
-        { provide: MovieService, useValue: spy }
-      ]
-    }).compileComponents();
+    imports: [DashboardComponent,
+        ReactiveFormsModule],
+    providers: [
+        { provide: MovieService, useValue: spy },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(DashboardComponent);
     component = fixture.componentInstance;
