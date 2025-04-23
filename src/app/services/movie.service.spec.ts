@@ -18,7 +18,7 @@ describe('MovieService', () => {
   it('should fetch movies from API', () => {
     const mockMovies = [{ title: 'Filme 1' }, { title: 'Filme 2' }];
 
-    service.getMovies().subscribe(movies => {
+    service.getMovies('').subscribe(movies => {
       expect(movies.length).toBe(2);
       expect(movies).toEqual(mockMovies);
     });

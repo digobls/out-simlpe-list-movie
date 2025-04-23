@@ -1,1 +1,165 @@
-<h2>Bem-vindo ao Dashboard!</h2>
+<section>
+  <div class="row g-10">
+    <div class="col-md-6">
+      <div class="container-table mb-4">
+        <h2>List years with multiple winners</h2>
+
+        <ng-container *ngIf="listMultipleWinners?.length">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+              <tr>
+                <th>Year</th>
+                <th>Win Count</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let winner of listMultipleWinners">
+                <td>{{ winner.year }}</td>
+                <td>{{ winner.winnerCount }}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="container-table mb-4">
+        <h2>Top 3 studios with winners</h2>
+
+        <ng-container *ngIf="listStudiosMovies?.length">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+              <tr>
+                <th>Name</th>
+                <th>Win Count</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let studio of listStudiosMovies">
+                <td>{{ studio.name }}</td>
+                <td>{{ studio.winCount }}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4 g-10">
+    <div class="col-md-6">
+      <div class="container-table">
+        <h2>Producers with longest and shortest interval between wins</h2>
+
+        <div class="card-body">
+          <div class="mb-4">
+            <h4>Maximum</h4>
+
+            <ng-container *ngIf="listMaxMovies.length">
+              <div class="table-responsive">
+                <table class="table table-bordered">
+                  <thead>
+                  <tr>
+                    <th>Producer</th>
+                    <th>Interval</th>
+                    <th>Previous Year</th>
+                    <th>Following Year</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let producer of listMaxMovies">
+                    <td>{{ producer.producer }}</td>
+                    <td>{{ producer.interval }}</td>
+                    <td>{{ producer.previousWin }}</td>
+                    <td>{{ producer.followingWin }}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </ng-container>
+          </div>
+
+          <div>
+            <h4>Minimum</h4>
+
+            <ng-container *ngIf="listMinMovies.length">
+              <div class="table-responsive">
+                <table class="table table-bordered">
+                  <thead>
+                  <tr>
+                    <th>Producer</th>
+                    <th>Interval</th>
+                    <th>Previous Year</th>
+                    <th>Following Year</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let producer of listMinMovies">
+                    <td>{{ producer.producer }}</td>
+                    <td>{{ producer.interval }}</td>
+                    <td>{{ producer.previousWin }}</td>
+                    <td>{{ producer.followingWin }}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="container-table mb-4">
+        <h2>List movie winners by year</h2>
+
+        <div class="input-group">
+          <input
+            type="number"
+            class="form-control"
+            [formControl]="yearControl"
+            (keyup.enter)="filterMoviesByYear()"
+            placeholder="Search by year (ex: 1999)">
+          <button
+            class="btn btn-search"
+            type="button"
+            (click)="filterMoviesByYear()">
+            <i class="bi bi-search"></i>
+          </button>
+        </div>
+
+        <div class="container-error">
+          <div *ngIf="yearControl.invalid && (yearControl.dirty || yearControl.touched)" class="text-danger mt-1 small">
+            <div *ngIf="yearControl.errors?.['pattern']">
+              Year must have exactly 4 digits
+            </div>
+          </div>
+        </div>
+
+        <div class="table-responsive offset-top-20">
+          <table class="table table-bordered">
+            <thead>
+            <tr>
+              <th>Id</th>
+              <th>Year</th>
+              <th>Title</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let movie of filteredMovies">
+              <td>{{ movie.id }}</td>
+              <td>{{ movie.year }}</td>
+              <td>{{ movie.title }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,24 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { MovieService } from '../../services/movie.service';
-import { NgForOf } from '@angular/common';
 
 @Component({
   selector: 'app-movie-list',
   templateUrl: './movie-list.component.html',
-  imports: [
-    NgForOf
-  ],
+  styleUrl: './movie-list.component.scss',
+  imports: [],
   standalone: true
 })
 export class MovieListComponent implements OnInit {
-  movies: any[] = [];
+  ngOnInit(): void {
 
-  constructor(private movieService: MovieService) {}
-
-  ngOnInit() {
-    this.movieService.getMovies().subscribe(data => {
-      console.log('data', data);
-      this.movies = data;
-    });
   }
+
 }

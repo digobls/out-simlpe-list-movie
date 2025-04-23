@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
@@ -11,7 +11,8 @@ export class MovieService {
 
   constructor(private http: HttpClient) { }
 
-  getMovies(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+  getMovies(paramsString: string): Observable<any> {
+    const params = new HttpParams({ fromString: paramsString });
+    return this.http.get<any>(this.apiUrl, { params });
   }
 }
