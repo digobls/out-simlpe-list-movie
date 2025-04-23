@@ -16,3 +16,6 @@ npm install -g @angular/cli
 
 # Start project
 ng serve
+
+# Execute case test
+ng test --code-coverage
