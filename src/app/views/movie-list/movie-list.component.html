@@ -1,1 +1,55 @@
-<p>List</p>
+<div class="container-table mt-4">
+  <h2>List movies</h2>
+
+  <ng-container *ngIf="movies.length">
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+          <th class="text-center align-middle">ID</th>
+          <th class="text-center">
+            Year
+            <input type="text" class="form-control form-control-sm mt-1"
+                   [formControl]="yearFilter" placeholder="Filter by year">
+          </th>
+          <th class="text-center align-middle">Title</th>
+          <th class="text-center">
+            Winner?
+            <select class="form-control form-control-sm mt-1" [formControl]="winnerFilter">
+              <option value="">Yes/No</option>
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </select>
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let movie of filteredMovies">
+          <td>{{ movie.id }}</td>
+          <td>{{ movie.year }}</td>
+          <td>
+            {{ movie.title }}
+          </td>
+          <td>
+            {{ movie.winner ? 'Yes' : 'No' }}
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="movies.length && filteredMovies.length === 0 && !loading">
+    <div class="mt-4" >
+      <div class="alert alert-info">
+        No movies found matching the selected filters.
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="!movies.length && !loading">
+    <div class="alert alert-info">
+      No movies registered at the moment.
+    </div>
+  </ng-container>
+</div>
