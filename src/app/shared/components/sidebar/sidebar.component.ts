@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, RouterLink, Event, NavigationEnd } from '@angular/router';
 import { filter, Subscription } from 'rxjs';
-import {NgClass} from "@angular/common";
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-sidebar',
@@ -12,7 +12,7 @@ import {NgClass} from "@angular/common";
 })
 export class SidebarComponent implements OnInit, OnDestroy {
   routeActive = '';
-  private routerSubscription?: Subscription;
+  routerSubscription?: Subscription;
 
   constructor(private router: Router) {}
 
@@ -25,7 +25,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
       )
       .subscribe((event: NavigationEnd) => {
         this.routeActive = event.urlAfterRedirects || event.url;
-        console.log('Rota atual:', this.routeActive);
       });
   }
 

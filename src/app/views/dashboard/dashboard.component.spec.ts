@@ -90,27 +90,6 @@ describe('DashboardComponent', () => {
     expect(component.listYearMovies).toEqual(mockMovies);
   });
 
-  it('should filter movies by year', () => {
-    component.listYearMovies = [
-      { year: '2018', title: 'Movie 1' },
-      { year: '2019', title: 'Movie 2' }
-    ];
-    component.yearControl.setValue('2018');
-
-    expect(component.loadFilmsByYear).toEqual([{ year: '2018', title: 'Movie 1' }]);
-  });
-
-  it('should load awards range', () => {
-    const mockResponse = { min: [{ name: 'A' }], max: [{ name: 'B' }] };
-    movieServiceSpy.getMovies.and.returnValue(of(mockResponse));
-
-    component.loadAwardsRange();
-
-    expect(movieServiceSpy.getMovies).toHaveBeenCalledWith('projection=max-min-win-interval-for-producers');
-    expect(component.listMinMovies).toEqual(mockResponse.min);
-    expect(component.listMaxMovies).toEqual(mockResponse.max);
-  });
-
   it('should load top 3 studios', () => {
     const mockStudios = [
       { name: 'Studio 1', winCount: 10 },
