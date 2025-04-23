@@ -4,16 +4,15 @@ import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { MovieService } from '../../services/movie.service';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss',
-  imports: [
-    NgForOf,
-    FormsModule,
-    ReactiveFormsModule,
-    NgIf
-  ],
-  standalone: true
+    selector: 'app-dashboard',
+    templateUrl: './dashboard.component.html',
+    styleUrl: './dashboard.component.scss',
+    imports: [
+        NgForOf,
+        FormsModule,
+        ReactiveFormsModule,
+        NgIf
+    ]
 })
 export class DashboardComponent implements OnInit {
   // Search year
